@@ -24,10 +24,10 @@
   <ion-row class="description-row">
     <ion-col size="9">
       <h3 class="details-name">
-        <app-text-shell [data]="details?.name"></app-text-shell>
+        {{details?.name}}
       </h3>
       <p class="details-style">
-        <app-text-shell [data]="details?.style"></app-text-shell>
+        {{details?.style}}
       </p>
     </ion-col>
     <ion-col size="3">
@@ -39,18 +39,18 @@
     <ion-col size="12">
       <ion-row class="details-scores restaurant-scores">
         <div class="restaurant-rating" [attr.ratingBase]="details?.avgRating | floor">
-          <app-text-shell [data]="details?.avgRating"></app-text-shell>
+          {{details?.avgRating}}
         </div>
         <ion-col class="score-item restaurant-score" *ngFor="let rating of details?.ratings">
           <ion-icon *ngIf="rating.concept" class="score-icon" [src]="(rating.concept) ? './assets/custom-icons/food/' + rating.concept + '-rate.svg' : ''"></ion-icon>
           <div class="score-value">
-            <app-text-shell [data]="rating.rate"></app-text-shell>
+            {{rating.rate}}
           </div>
         </ion-col>
         <ion-col class="score-item restaurant-score reviews-count">
           <ion-icon class="score-icon" src="./assets/custom-icons/food/reviews.svg"></ion-icon>
           <div class="score-value">
-            <app-text-shell [data]="details?.reviewsCount"></app-text-shell>
+            {{details?.reviewsCount}}
           </div>
         </ion-col>
       </ion-row>
@@ -62,16 +62,16 @@
       <li class="open-hour-item" *ngFor="let schedule of details?.openHours">
         <div class="schedule-outer">
           <span class="schedule-day">
-            <app-text-shell [data]="schedule.day"></app-text-shell>
+            {{schedule.day}}
           </span>
           <div class="schedule-hours">
             <ng-container *ngIf="schedule.open">
               <span class="schedule-value">
-                <app-text-shell [data]="schedule.hourFrom"></app-text-shell>
+                {{schedule.hourFrom}}
               </span>
               <span class="schedule-separator">to</span>
               <span class="schedule-value">
-                <app-text-shell [data]="schedule.hourTo"></app-text-shell>
+                {{schedule.hourTo}}
               </span>
             </ng-container>
             <ng-container *ngIf="!schedule.open">
@@ -86,7 +86,7 @@
     <div class="location-header">
       <h3 class="detail-title">Address</h3>
       <span class="location-address">
-        <app-text-shell [data]="details?.location?.address"></app-text-shell>
+        {{details?.location?.address}}
       </span>
     </div>
     <!-- <app-aspect-ratio [ratio]="{w: 64, h: 20}">
@@ -100,7 +100,7 @@
   <ion-row class="details-tags">
     <ion-col class="tag-wrapper" *ngFor="let tag of details?.tags">
       <span class="item-tag">
-        <app-text-shell [data]="tag"></app-text-shell>
+        {{tag}}
       </span>
     </ion-col>
   </ion-row>
@@ -124,13 +124,13 @@
     <ion-row class="popular-dish" *ngFor="let dish of details?.popularDishes">
       <ion-col size="9">
         <span class="dish-name">
-          <app-text-shell [data]="dish.name"></app-text-shell>
+          {{dish.name}}
         </span>
         <ion-progress-bar class="dish-score" type="determinate" [value]="(dish.rate / 5)"></ion-progress-bar>
       </ion-col>
       <ion-col size="3" class="dish-votes-count">
         <div class="dish-votes-value">
-          <app-text-shell [data]="dish.votesCount"></app-text-shell>
+          {{dish.votesCount}}
         </div>
         <ion-icon class="dish-votes-icon" name="heart-outline"></ion-icon>
       </ion-col>
@@ -149,20 +149,20 @@
           </ion-col>
           <ion-col class="user-brief-wrapper">
             <h5 class="review-user-name">
-              <app-text-shell [data]="review.user.name"></app-text-shell>
+              {{review.user.name}}
             </h5>
             <ion-row class="details-scores user-scores">
               <ion-col class="score-item user-score">
                 <ion-icon class="score-icon" src="./assets/custom-icons/food/reviews.svg"></ion-icon>
                 <div class="score-value">
-                  <app-text-shell [data]="review.user.reviewsCount"></app-text-shell>
+                  {{review.user.reviewsCount}}
                 </div>
                 <span class="score-title">Reviews</span>
               </ion-col>
               <ion-col class="score-item user-score">
                 <ion-icon class="score-icon" src="./assets/custom-icons/food/points.svg"></ion-icon>
                 <div class="score-value">
-                  <app-text-shell [data]="review.user.points"></app-text-shell>
+                  {{review.user.points}}
                 </div>
                 <span class="score-title">Points</span>
               </ion-col>
@@ -170,21 +170,21 @@
           </ion-col>
           <ion-col class="review-info-wrapper">
             <span class="review-date">
-              <app-text-shell [data]="review.publishedAt"></app-text-shell>
+              {{review.publishedAt}}
             </span>
             <div class="review-rating" [attr.ratingBase]="review.avgRating | floor">
-              <app-text-shell [data]="review.avgRating"></app-text-shell>
+              {{review.avgRating}}
             </div>
           </ion-col>
         </ion-row>
         <p class="review-message">
-          <app-text-shell [data]="review.message" lines="5"></app-text-shell>
+          {{review.message}}
         </p>
         <ion-row class="details-scores review-scores">
           <ion-col class="score-item review-score" *ngFor="let rating of review.ratings">
             <ion-icon *ngIf="rating.concept" class="score-icon" [src]="(rating.concept) ? './assets/custom-icons/food/' + rating.concept + '-rate.svg' : ''"></ion-icon>
             <div class="score-value">
-              <app-text-shell [data]="rating.rate"></app-text-shell>
+              {{rating.rate}}
             </div>
           </ion-col>
         </ion-row>
@@ -216,13 +216,13 @@
         <hr class="details-divider">
         <div class="recipe-call-to-action">
           <span class="recipe-author">
-            <app-text-shell [data]="details?.shortName?.concat(' famous')"></app-text-shell>
+            {{details?.shortName?.concat(' famous')}}
           </span>
           <h3 class="recipe-name">
-            <app-text-shell [data]="recipe.name"></app-text-shell>
+            {{recipe.name}}
           </h3>
           <span class="recipe-chef">
-            <app-text-shell [data]="(recipe.chef) ? 'By chef'.concat(' ', recipe?.chef?.name) : null"></app-text-shell>
+            {{(recipe.chef) ? 'By chef'.concat(' ', recipe?.chef?.name) : null}}
            </span>
         </div>
         <hr class="details-divider">
@@ -230,19 +230,19 @@
           <ion-col class="score-item attribute-score">
             <ion-icon class="score-icon" src="./assets/custom-icons/food/difficulty.svg"></ion-icon>
             <div class="score-value">
-              <app-text-shell [data]="recipe.difficulty"></app-text-shell>
+              {{recipe.difficulty}}
             </div>
           </ion-col>
           <ion-col class="score-item attribute-score">
             <ion-icon class="score-icon" src="./assets/custom-icons/food/cooking-time.svg"></ion-icon>
             <div class="score-value">
-              <app-text-shell [data]="recipe.time"></app-text-shell>
+              {{recipe.time}}
             </div>
           </ion-col>
           <ion-col class="score-item attribute-score">
             <ion-icon class="score-icon" src="./assets/custom-icons/food/calories.svg"></ion-icon>
             <div class="score-value">
-              <app-text-shell [data]="recipe.calories"></app-text-shell>
+              {{recipe.calories}}
             </div>
           </ion-col>
         </ion-row>

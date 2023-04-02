@@ -33,10 +33,10 @@
       </ion-col>
       <ion-col class="info-col" size="9">
         <h4 class="details-name">
-          <app-text-shell animation="bouncing" [data]="details?.name"></app-text-shell>
+          {{details?.name}}
         </h4>
         <p class="details-description">
-          <app-text-shell animation="bouncing" lines="3" [data]="details?.description"></app-text-shell>
+          {{details?.description}}
         </p>
       </ion-col>
       <ion-col class="preview-image-col" size="3">
@@ -55,7 +55,7 @@
       <ion-col size="6">
         <ion-button class="promo-code-btn" expand="block" shape="round" fill="outline" color="claim">
           <span class="promo-code">
-            <app-text-shell [data]="details?.code"></app-text-shell>
+            {{details?.code}}
           </span>
         </ion-button>
       </ion-col>
@@ -68,7 +68,7 @@
     <div class="expiration-notice">
       <span class="notice-message">Cupon {{ ((details?.expirationDate | appTimeDifference) < 0) ? 'expired' : 'expires' }} on:</span>
       <span class="expiration-value">
-        <app-text-shell [data]="details?.expirationDate | date:'mediumDate'"></app-text-shell>
+        {{details?.expirationDate | date:'mediumDate'}}
       </span>
     </div>
   </div>
@@ -83,10 +83,10 @@
       </ion-col>
       <ion-col class="deal-info-wrapper" size="8">
         <h4 class="related-deal-title">
-          <app-text-shell [data]="deal?.name"></app-text-shell>
+          {{deal?.name}}
         </h4>
         <p class="related-deal-description">
-          <app-text-shell [data]="deal?.description"></app-text-shell>
+          {{deal?.description}}
         </p>
       </ion-col>
     </ion-row>

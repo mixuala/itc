@@ -8,8 +8,8 @@
 </ion-header>
 
 <ion-content>
-  <ng-container *ngIf="listing?.items">
-    <div class="listing-item" *ngFor="let item of listing?.items">
+  <ng-container *ngIf="items">
+    <div class="listing-item" *ngFor="let item of items">
       <ion-row class="image-row">
         <ion-col size="12">
           <a [routerLink]="['/app/categories/travel/', item.slug]">
@@ -35,27 +35,27 @@
         <ion-col class="main-info-col">
           <h3 class="item-name">
             <a class="name-anchor" [routerLink]="['/app/categories/travel/', item.slug]">
-              <app-text-shell animation="bouncing" [data]="(item?.name && item?.category) ? (item.name + ' - ' + item.category) : (item.name)"></app-text-shell>
+              {{(item?.name && item?.category) ? (item.name + ' - ' + item.category) : (item.name)}}
             </a>
           </h3>
           <p class="item-description">
-            <app-text-shell animation="bouncing" [data]="item.description" lines="3"></app-text-shell>
+            {{item.description}}
           </p>
           <p class="item-address">
-            <app-text-shell animation="bouncing" [data]="item.address"></app-text-shell>
+            {{item.address}}
           </p>
         </ion-col>
       </ion-row>
       <ion-row class="stats-row">
         <ion-col size="2" class="item-rating">
           <span class="rating-value">
-            <app-text-shell [data]="item.rating"></app-text-shell>
+            {{item.rating}}
           </span>
           <ion-icon class="stats-icon" src="./assets/custom-icons/travel/star.svg"></ion-icon>
         </ion-col>
         <ion-col size="2" class="item-reviews">
           <span class="reviews-count">
-            <app-text-shell [data]="item.reviewsCount"></app-text-shell>
+            {{item.reviewsCount}}
           </span>
           <ion-icon class="stats-icon" src="./assets/custom-icons/travel/comments.svg"></ion-icon>
         </ion-col>

@@ -21,18 +21,18 @@
     <ion-col size="12">
       <h4 class="details-price">
         <span class="price-icon">$</span>
-        <app-text-shell [data]="details?.price"></app-text-shell>
+        {{details?.price}}
       </h4>
       <p class="details-address">
-        <app-text-shell animation="bouncing" [data]="details?.location?.address"></app-text-shell>
+        {{details?.location?.address}}
       </p>
       <p class="details-address">
-        <app-text-shell animation="bouncing" [data]="details?.location?.city"></app-text-shell>
+        {{details?.location?.city}}
       </p>
     </ion-col>
     <ion-col size="12">
       <p class="details-description">
-        <app-text-shell animation="bouncing" lines="5" [data]="details?.description"></app-text-shell>
+        {{details?.description}}
       </p>
     </ion-col>
   </ion-row>
@@ -47,7 +47,7 @@
       </ion-col>
       <ion-col size="2">
         <span class="accommodation-value">
-          <app-text-shell [data]="details?.accommodations?.guests"></app-text-shell>
+          {{details?.accommodations?.guests}}
         </span>
       </ion-col>
     </ion-row>
@@ -60,7 +60,7 @@
       </ion-col>
       <ion-col size="2">
         <span class="accommodation-value">
-          <app-text-shell [data]="details?.accommodations?.bedrooms"></app-text-shell>
+          {{details?.accommodations?.bedrooms}}
         </span>
       </ion-col>
     </ion-row>
@@ -73,7 +73,7 @@
       </ion-col>
       <ion-col size="2">
         <span class="accommodation-value">
-          <app-text-shell [data]="details?.accommodations?.bathrooms"></app-text-shell>
+          {{details?.accommodations?.bathrooms}}
         </span>
       </ion-col>
     </ion-row>
@@ -86,7 +86,7 @@
       </ion-col>
       <ion-col size="2">
         <span class="accommodation-value">
-          <app-text-shell [data]="details?.accommodations?.patios"></app-text-shell>
+          {{details?.accommodations?.patios}}
         </span>
       </ion-col>
     </ion-row>
@@ -95,7 +95,7 @@
     <div class="location-header">
       <h3 class="detail-title">Location</h3>
       <span class="location-address">
-        <app-text-shell [data]="details?.location?.address"></app-text-shell>
+        {{details?.location?.address}}
       </span>
     </div>
     <!-- <app-aspect-ratio [ratio]="{w: 64, h: 30}">
@@ -111,7 +111,7 @@
     <ion-row class="amenities-tags">
       <ion-col class="tag-wrapper" *ngFor="let amenity of details?.amenities">
         <span class="amenity-tag">
-          <app-text-shell [data]="amenity.name"></app-text-shell>
+          {{amenity.name}}
         </span>
       </ion-col>
     </ion-row>
@@ -120,13 +120,13 @@
     <h3 class="detail-title">Safety Features</h3>
     <ul class="features-list">
       <li class="feature-item">
-        <app-text-shell [data]="'Smoke Detector'"></app-text-shell>
+        Smoke Detector
       </li>
       <li class="feature-item">
-        <app-text-shell [data]="'Carbon Monoxide Detector'"></app-text-shell>
+        Carbon Monoxide Detector
       </li>
       <li class="feature-item">
-        <app-text-shell [data]="'Security Alarm System'"></app-text-shell>
+        Security Alarm System
       </li>
     </ul>
   </div>
@@ -134,10 +134,10 @@
     <h3 class="detail-title">Availability</h3>
     <ion-row class="availability-row">
       <span class="availability-description">
-        <app-text-shell [data]="'1 month minimum'"></app-text-shell>
+        1 month minimum
       </span>
       <span class="availability-value">
-        <app-text-shell [data]="'Available from June'"></app-text-shell>
+        Available from June
       </span>
     </ion-row>
     <ion-button class="book-now-btn" color="dark" expand="block" fill="outline">BOOK NOW</ion-button>

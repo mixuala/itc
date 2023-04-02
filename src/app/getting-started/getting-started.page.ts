@@ -1,5 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Component, AfterViewInit, ViewChild, HostBinding, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, HostBinding } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 import { IonSlides, MenuController } from '@ionic/angular';
@@ -19,10 +18,7 @@ export class GettingStartedPage implements AfterViewInit {
 
   gettingStartedForm: FormGroup;
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: object,
-    public menu: MenuController
-  ) {
+  constructor(public menu: MenuController) {
     this.gettingStartedForm = new FormGroup({
       browsingCategory: new FormControl('men'),
       followingInterests: new FormGroup({
@@ -47,19 +43,16 @@ export class GettingStartedPage implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Accessing slides in server platform throw errors
-    if (isPlatformBrowser(this.platformId)) {
-      // ViewChild is set
+    // ViewChild is set
+    this.slides.isEnd().then(isEnd => {
+      this.isLastSlide = isEnd;
+    });
+
+    // Subscribe to changes
+    this.slides.ionSlideWillChange.subscribe(changes => {
       this.slides.isEnd().then(isEnd => {
         this.isLastSlide = isEnd;
       });
-
-      // Subscribe to changes
-      this.slides.ionSlideWillChange.subscribe(changes => {
-        this.slides.isEnd().then(isEnd => {
-          this.isLastSlide = isEnd;
-        });
-      });
-    }
+    });
   }
 }

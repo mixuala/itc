@@ -3,10 +3,15 @@
   "appName": "Ionic5FullApp",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "dist/app/browser",
+  "webDir": "www",
   "plugins": {
     "SplashScreen": {
       "launchAutoHide": false
+    },
+    "CapacitorFirebaseAuth": {
+      "providers": ["google.com", "twitter.com", "facebook.com"],
+      "languageCode": "en",
+      "nativeAuth": false  
     }
   }
 }

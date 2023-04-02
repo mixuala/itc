@@ -8,11 +8,13 @@ import { IonicModule } from '@ionic/angular';
 import { ComponentsModule } from '../components/components.module';
 
 import { WalkthroughPage } from './walkthrough.page';
+import { WalkthroughGuard } from './walkthrough.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: WalkthroughPage
+    component: WalkthroughPage,
+    canActivate: [WalkthroughGuard]
   }
 ];
 
@@ -24,6 +26,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ComponentsModule
   ],
-  declarations: [WalkthroughPage]
+  declarations: [WalkthroughPage],
+  providers: [WalkthroughGuard]
 })
 export class WalkthroughPageModule {}

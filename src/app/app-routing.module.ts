@@ -57,6 +57,19 @@ const routes: Routes = [
     loadChildren: () => import('./showcase/showcase.module').then(m => m.ShowcasePageModule)
   },
   {
+    path: 'firebase',
+    redirectTo: 'firebase/auth/sign-in',
+    pathMatch: 'full'
+  },
+  {
+    path: 'firebase/auth',
+    loadChildren: () => import('./firebase/auth/firebase-auth.module').then(m => m.FirebaseAuthModule)
+  },
+  {
+    path: 'firebase/crud',
+    loadChildren: () => import('./firebase/crud/firebase-crud.module').then(m => m.FirebaseCrudModule)
+  },
+  {
     path: '**',
     redirectTo: 'page-not-found'
   }
@@ -64,7 +77,6 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      // This value is required for server-side rendering to work.
       initialNavigation: 'enabled',
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled'

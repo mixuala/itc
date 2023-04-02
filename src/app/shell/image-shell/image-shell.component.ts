@@ -1,7 +1,7 @@
-import { Component, Input, HostBinding } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { Component, Input, HostBinding, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 
-import { ImageShellState, TransferStateHelper } from '../../utils/transfer-state-helper';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-image-shell',
@@ -21,11 +21,8 @@ export class ImageShellComponent {
   // tslint:disable-next-line:variable-name
   _display = '';
 
-  @HostBinding('class.img-ssr') imageSSR = false;
   @HostBinding('class.img-loaded') imageLoaded = false;
   @HostBinding('class.img-error') imageError = false;
-
-  @HostBinding('attr.data-error') errorMessage = 'Could not load image';
 
   @HostBinding('style.backgroundImage') backgroundImage: string;
 
@@ -49,16 +46,17 @@ export class ImageShellComponent {
       this._src = (val !== undefined && val !== null) ? val : '';
     }
 
-    // When using SSR (Server Side Rendering), avoid the loading animation while the image resource is being loaded
-    const imageState = this.transferStateHelper.checkImageShellState('shell-images-state', this._src);
+    if (this._display === 'cover') {
+      // Unset the background-image
+      this.backgroundImage = 'unset';
+    }
 
-    if (imageState === ImageShellState.SSR || imageState === ImageShellState.BROWSER_FROM_SSR) {
-      this._imageProcessedInServer();
+    // Show loading indicator
+    // When using SSR (Server Side Rendering), avoid the loading animation while the image resource is being loaded
+    if (isPlatformServer(this.platformId)) {
+      this.imageLoaded = true;
     } else {
-      if (this._display === 'cover') {
-        // Unset the background-image until the image is loaded
-        this.backgroundImage = 'unset';
-      }
+      this.imageLoaded = false;
     }
   }
 
@@ -68,24 +66,14 @@ export class ImageShellComponent {
   }
 
   constructor(
-    private transferStateHelper: TransferStateHelper
-  ) { }
+    @Inject(PLATFORM_ID) private platformId: string
+  ) {}
 
-  _imageProcessedInServer(): void {
-    this.imageSSR = true;
-
-    // Also set backgroundImage so it's ready when transitioning from SSR to the browser
-    if (this._display === 'cover') {
-      this.backgroundImage = 'url(' + this._src + ')';
-    }
-  }
-
-  _imageLoaded(): void {
+  _imageLoaded() {
     this.imageLoaded = true;
 
     // If it's a cover image then set the background-image property accordingly
     if (this._display === 'cover') {
-      // Now that the image is loaded, set the background image
       this.backgroundImage = 'url(' + this._src + ')';
     }
   }
@@ -96,7 +84,6 @@ export class ImageShellComponent {
     // Avoid that shell case
     if (this._src && this._src !== '') {
       this.imageLoaded = false;
-      this.imageSSR = false;
 
       setTimeout(() => {
         this.imageError = true;

@@ -24,10 +24,10 @@
   <ion-row class="description-row">
     <ion-col size="12">
       <h3 class="details-name">
-        <app-text-shell animation="bouncing" [data]="details?.name?.concat(' - ', details?.category)"></app-text-shell>
+        {{details?.name?.concat(' - ', details?.category)}}
       </h3>
       <p class="details-short-description">
-        <app-text-shell animation="bouncing" [data]="details?.shortDescription"></app-text-shell>
+        {{details?.shortDescription}}
       </p>
     </ion-col>
     <ion-col size="12">
@@ -35,13 +35,13 @@
         <div class="score-item">
           <ion-icon class="score-icon" src="./assets/custom-icons/travel/star.svg"></ion-icon>
           <div class="score-value">
-            <app-text-shell [data]="details?.rating"></app-text-shell>
+            {{details?.rating}}
           </div>
         </div>
         <div class="score-item">
           <ion-icon class="score-icon" src="./assets/custom-icons/travel/comments.svg"></ion-icon>
           <div class="score-value">
-            <app-text-shell [data]="details?.reviewsCount"></app-text-shell>
+            {{details?.reviewsCount}}
           </div>
         </div>
       </div>
@@ -50,14 +50,14 @@
       <ion-row class="details-tags">
         <ion-col class="tag-wrapper" *ngFor="let tag of details?.tags">
           <span class="item-tag">
-            <app-text-shell [data]="tag"></app-text-shell>
+            {{tag}}
           </span>
         </ion-col>
       </ion-row>
     </ion-col>
     <ion-col size="12">
       <p class="details-description">
-        <app-text-shell animation="bouncing" lines="6" [data]="details?.fullDescription"></app-text-shell>
+        {{details?.fullDescription}}
       </p>
     </ion-col>
   </ion-row>
@@ -67,16 +67,16 @@
       <li class="open-hour-item" *ngFor="let schedule of details?.openHours">
         <div class="schedule-outer">
           <span class="schedule-day">
-            <app-text-shell [data]="schedule.day"></app-text-shell>
+            {{schedule.day}}
           </span>
           <div class="schedule-hours">
             <ng-container *ngIf="schedule.open">
               <span class="schedule-value">
-                <app-text-shell [data]="schedule.hourFrom"></app-text-shell>
+                {{schedule.hourFrom}}
               </span>
               <span class="schedule-separator">to</span>
               <span class="schedule-value">
-                <app-text-shell [data]="schedule.hourTo"></app-text-shell>
+                {{schedule.hourTo}}
               </span>
             </ng-container>
             <ng-container *ngIf="!schedule.open">
@@ -91,7 +91,7 @@
     <div class="location-header">
       <h3 class="detail-title">Where?</h3>
       <span class="location-address">
-        <app-text-shell [data]="details?.location?.address"></app-text-shell>
+        {{details?.location?.address}}
       </span>
     </div>
     <!-- <app-aspect-ratio [ratio]="{w: 64, h: 30}">
@@ -111,12 +111,12 @@
         </app-aspect-ratio>
         <div class="place-details">
           <h5 class="place-name">
-            <app-text-shell [data]="placeToStay.name"></app-text-shell>
+            {{placeToStay.name}}
           </h5>
           <div class="place-rating">
             <ion-icon class="rating-icon" name="star-outline"></ion-icon>
             <div class="rating-value">
-              <app-text-shell [data]="placeToStay.rating"></app-text-shell>
+              {{placeToStay.rating}}
             </div>
           </div>
         </div>
@@ -132,12 +132,12 @@
         </app-aspect-ratio>
         <div class="place-details">
           <h5 class="place-name">
-            <app-text-shell [data]="placeToEat.name"></app-text-shell>
+            {{placeToEat.name}}
           </h5>
           <div class="place-rating">
             <ion-icon class="rating-icon" name="star-outline"></ion-icon>
             <div class="rating-value">
-              <app-text-shell [data]="placeToEat.rating"></app-text-shell>
+              {{placeToEat.rating}}
             </div>
           </div>
         </div>
@@ -155,15 +155,15 @@
       </ion-col>
       <ion-col size="12" class="activity-details">
         <h5 class="activity-name">
-          <app-text-shell [data]="relatedActivity.name"></app-text-shell>
+          {{relatedActivity.name}}
         </h5>
         <span class="activity-category">
-          <app-text-shell [data]="relatedActivity.category"></app-text-shell>
+          {{relatedActivity.category}}
         </span>
         <div class="activity-rating">
           <ion-icon class="rating-icon" name="star-outline"></ion-icon>
           <div class="rating-value">
-            <app-text-shell [data]="relatedActivity.rating"></app-text-shell>
+            {{relatedActivity.rating}}
           </div>
         </div>
       </ion-col>

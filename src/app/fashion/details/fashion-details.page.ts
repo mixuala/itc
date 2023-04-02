@@ -1,11 +1,7 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-
-import { IResolvedRouteData, ResolverHelper } from '../../utils/resolver-helper';
-import { FashionDetailsModel } from './fashion-details.model';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-fashion-details',
@@ -21,7 +17,7 @@ export class FashionDetailsPage implements OnInit {
   // Gather all component subscription in one place. Can be one Subscription or multiple (chained using the Subscription.add() method)
   subscriptions: Subscription;
 
-  details: FashionDetailsModel;
+  details: any;
   colorVariants = [];
   sizeVariants = [];
   slidesOptions: any = {
@@ -30,26 +26,15 @@ export class FashionDetailsPage implements OnInit {
     }
   };
 
-  @HostBinding('class.is-shell') get isShell() {
-    return (this.details && this.details.isShell) ? true : false;
-  }
-
   constructor(
     private route: ActivatedRoute,
     public alertController: AlertController
   ) { }
 
-  ngOnInit(): void {
 
-    this.subscriptions = this.route.data
-    .pipe(
-      // Extract data for this page
-      switchMap((resolvedRouteData: IResolvedRouteData<FashionDetailsModel>) => {
-        return ResolverHelper.extractData<FashionDetailsModel>(resolvedRouteData.data, FashionDetailsModel);
-      })
-    )
-    .subscribe((state) => {
-      this.details = state;
+  ngOnInit(): void {
+    this.route.data.subscribe(routeData => {
+      this.details = routeData['data'];
 
       this.colorVariants = this.details.colorVariants
       .map(item =>
@@ -72,7 +57,7 @@ export class FashionDetailsPage implements OnInit {
           checked: item.default
         })
       );
-    }, (error) => console.log(error));
+    });
   }
 
   async openColorChooser() {
@@ -123,11 +108,5 @@ export class FashionDetailsPage implements OnInit {
     });
 
     await alert.present();
-  }
-
-  // NOTE: Ionic only calls ngOnDestroy if the page was popped (ex: when navigating back)
-  // Since ngOnDestroy might not fire when you navigate from the current page, use ionViewWillLeave to cleanup Subscriptions
-  ionViewWillLeave(): void {
-    this.subscriptions.unsubscribe();
   }
 }

@@ -63,6 +63,38 @@
         </ion-list>
         <ion-list>
           <ion-list-header>
+            <ion-label>Integrations</ion-label>
+          </ion-list-header>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerLink]="['/firebase/auth/sign-in']">
+              <ion-icon slot="start" name="logo-firebase"></ion-icon>
+              <ion-label>
+                Firebase Auth
+              </ion-label>
+            </ion-item>
+            <ion-item [routerLink]="['/firebase/crud/listing']">
+              <ion-icon slot="start" name="logo-firebase"></ion-icon>
+              <ion-label>
+                Firebase List
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Showcase</ion-label>
+          </ion-list-header>
+          <ion-menu-toggle autoHide="false">
+            <ion-item [routerLink]="['/showcase/custom-components']">
+              <ion-icon slot="start" name="color-wand-outline"></ion-icon>
+              <ion-label>
+                Custom Components
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+        <ion-list>
+          <ion-list-header>
             <ion-label>Account</ion-label>
           </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let p of accountPages; let i = index">
@@ -73,28 +105,11 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-        </ion-list>
-        <ion-list>
-          <ion-list-header>
-            <ion-label>Showcase</ion-label>
-          </ion-list-header>
           <ion-menu-toggle autoHide="false">
-            <ion-item [routerLink]="['/showcase/app-shell']">
-              <ion-icon slot="start" name="egg-outline"></ion-icon>
+            <ion-item (click)="openTutorial()">
+              <ion-icon slot="start" name="school-outline"></ion-icon>
               <ion-label>
-                App Shell
-              </ion-label>
-            </ion-item>
-            <ion-item [routerLink]="['/showcase/route-resolvers-ux']">
-              <ion-icon slot="start" name="cog-outline"></ion-icon>
-              <ion-label>
-                Route Resolvers UX
-              </ion-label>
-            </ion-item>
-            <ion-item [routerLink]="['/showcase/custom-components']">
-              <ion-icon slot="start" name="color-wand-outline"></ion-icon>
-              <ion-label>
-                Custom Components
+                Tutorial
               </ion-label>
             </ion-item>
           </ion-menu-toggle>

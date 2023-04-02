@@ -8,8 +8,8 @@
 </ion-header>
 
 <ion-content class="food-listing-content">
-  <ng-container *ngIf="listing?.items">
-    <div class="listing-item" *ngFor="let item of listing?.items">
+  <ng-container *ngIf="items">
+    <div class="listing-item" *ngFor="let item of items">
       <div class="cover-wrapper">
         <a class="cover-anchor" [routerLink]="['/app/categories/food/', item.slug]">
           <app-image-shell class="cover-image add-overlay" animation="spinner" [display]="'cover'" [src]="item.image">
@@ -28,16 +28,16 @@
           <ion-row class="description-wrapper">
             <h3 class="item-name">
               <a class="name-anchor" [routerLink]="['/app/categories/food/', item.slug]">
-                <app-text-shell [data]="item.name"></app-text-shell>
+                {{item.name}}
               </a>
             </h3>
             <p class="item-address">
-              <app-text-shell [data]="item.address"></app-text-shell>
+              {{item.address}}
             </p>
             <ion-row class="item-tags">
               <ion-col class="tag-wrapper" *ngFor="let tag of item.tags">
                 <span class="item-tag">
-                  <app-text-shell [data]="tag"></app-text-shell>
+                  {{tag}}
                 </span>
               </ion-col>
             </ion-row>
@@ -45,7 +45,7 @@
         </ion-col>
         <ion-col class="stats-col">
           <span class="item-rating" [attr.ratingBase]="item.rating | floor">
-            <app-text-shell [data]="item.rating"></app-text-shell>
+            {{item.rating}}
           </span>
           <div class="item-price-range">
             <span class="price" *ngFor="let price of [].constructor(item.priceRange)">$</span>

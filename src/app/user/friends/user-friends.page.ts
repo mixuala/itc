@@ -1,10 +1,6 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-
-import { IResolvedRouteData, ResolverHelper } from '../../utils/resolver-helper';
-import { UserFriendsModel } from './user-friends.model';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-friends',
@@ -20,7 +16,7 @@ export class UserFriendsPage implements OnInit {
   // Gather all component subscription in one place. Can be one Subscription or multiple (chained using the Subscription.add() method)
   subscriptions: Subscription;
 
-  data: UserFriendsModel;
+  data: any;
 
   segmentValue = 'friends';
   friendsList: Array<any>;
@@ -29,22 +25,11 @@ export class UserFriendsPage implements OnInit {
   searchQuery = '';
   showFilters = false;
 
-  @HostBinding('class.is-shell') get isShell() {
-    return (this.data && this.data.isShell) ? true : false;
-  }
-
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.subscriptions = this.route.data
-    .pipe(
-      // Extract data for this page
-      switchMap((resolvedRouteData: IResolvedRouteData<UserFriendsModel>) => {
-        return ResolverHelper.extractData<UserFriendsModel>(resolvedRouteData.data, UserFriendsModel);
-      })
-    )
-    .subscribe((state) => {
-      this.data = state;
+    this.route.data.subscribe(routeData => {
+      this.data = routeData['data'];
       this.friendsList = this.data.friends;
       this.followersList = this.data.followers;
       this.followingList = this.data.following;
@@ -74,9 +59,4 @@ export class UserFriendsPage implements OnInit {
     return list.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
   }
 
-  // NOTE: Ionic only calls ngOnDestroy if the page was popped (ex: when navigating back)
-  // Since ngOnDestroy might not fire when you navigate from the current page, use ionViewWillLeave to cleanup Subscriptions
-  ionViewWillLeave(): void {
-    this.subscriptions.unsubscribe();
-  }
 }

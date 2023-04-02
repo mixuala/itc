@@ -13,3 +13,8 @@ ion-title {
     margin-inline-start: .5rem;
   }
 }
+
+// temporary fix for https://github.com/ionic-team/ionic-framework/issues/18641
+ion-picker {
+  touch-action: none;
+}

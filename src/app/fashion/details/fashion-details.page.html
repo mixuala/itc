@@ -22,16 +22,16 @@
   </ion-row>
   <div class="description-wrapper">
     <h3 class="details-name">
-      <app-text-shell animation="gradient" [data]="details?.name"></app-text-shell>
+      {{details?.name}}
     </h3>
     <span class="details-brand">
-      <app-text-shell animation="gradient" [data]="details?.brand"></app-text-shell>
+      {{details?.brand}}
     </span>
     <span class="details-price">
-      <app-text-shell animation="gradient" [data]="details?.price | currency"></app-text-shell>
+      {{details?.price | currency}}
     </span>
     <span class="details-sale-price">
-      <app-text-shell animation="gradient" [data]="details?.salePrice | currency"></app-text-shell>
+      {{details?.salePrice | currency}}
     </span>
   </div>
   <ion-row class="details-purchase-options-row">
@@ -51,19 +51,19 @@
   <div class="details-description-wrapper">
     <h3 class="detail-title">About me</h3>
     <p class="details-description">
-      <app-text-shell animation="gradient" [data]="details?.description" lines="5"></app-text-shell>
+      {{details?.description}}
     </p>
   </div>
   <div class="details-description-wrapper">
     <h3 class="detail-title">Looking after me</h3>
     <p class="details-description">
-      <app-text-shell animation="gradient" [data]="details?.careInstructions" lines="3"></app-text-shell>
+      {{details?.careInstructions}}
     </p>
   </div>
   <div class="details-description-wrapper">
     <h3 class="detail-title">Product code</h3>
     <span class="details-description product-code">
-      <app-text-shell animation="gradient" [data]="details?.upc"></app-text-shell>
+      {{details?.upc}}
     </span>
   </div>
   <!-- Related Products -->
@@ -81,11 +81,11 @@
         <div class="item-details-wrapper">
           <h4 class="item-name">
             <a class="name-anchor">
-              <app-text-shell animation="gradient" [data]="relatedProduct.name"></app-text-shell>
+              {{relatedProduct.name}}
             </a>
           </h4>
           <span class="item-sale-price">
-            <app-text-shell animation="gradient" [data]="relatedProduct.salePrice | currency"></app-text-shell>
+            {{relatedProduct.salePrice | currency}}
           </span>
         </div>
       </ion-col>

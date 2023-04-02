@@ -10,7 +10,6 @@ import { ComponentsModule } from '../../components/components.module';
 import { TravelService } from '../travel.service';
 import { TravelDetailsPage } from './travel-details.page';
 import { TravelDetailsResolver } from './travel-details.resolver';
-import { TravelDetailsPlainResolver } from './travel-details.plain.resolver';
 
 const routes: Routes = [
   {
@@ -18,7 +17,6 @@ const routes: Routes = [
     component: TravelDetailsPage,
     resolve: {
       data: TravelDetailsResolver
-      // data: TravelDetailsPlainResolver
     }
   }
 ];
@@ -36,7 +34,6 @@ const routes: Routes = [
   ],
   providers: [
     TravelDetailsResolver,
-    TravelDetailsPlainResolver,
     TravelService
   ]
 })

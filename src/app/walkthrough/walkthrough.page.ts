@@ -1,7 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, AfterViewInit, ViewChild, HostBinding, PLATFORM_ID, Inject } from '@angular/core';
-
+import { Component, AfterViewInit, ViewChild, HostBinding, PLATFORM_ID, Inject, OnInit } from '@angular/core';
 import { IonSlides, MenuController } from '@ionic/angular';
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins;
 
 @Component({
   selector: 'app-walkthrough',
@@ -12,7 +13,7 @@ import { IonSlides, MenuController } from '@ionic/angular';
     './styles/walkthrough.responsive.scss'
   ]
 })
-export class WalkthroughPage implements AfterViewInit {
+export class WalkthroughPage implements AfterViewInit, OnInit {
   slidesOptions: any = {
     zoom: {
       toggle: false // Disable zooming to prevent weird double tap zomming on slide images
@@ -29,6 +30,14 @@ export class WalkthroughPage implements AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: object,
     public menu: MenuController
   ) { }
+
+  ngOnInit(): void {
+    // save key to mark the walkthrough as visited so the next time the user vistis the app, he would be redirected to log in
+    Storage.set({
+      key: 'visitedWalkthrough',
+      value: 'true'
+    });
+  }
 
   // Disable side menu for this page
   ionViewDidEnter(): void {
