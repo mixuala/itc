@@ -2,17 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+
+import { Capacitor } from '@capacitor/core';
+
+import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth, getAuth, initializeAuth, indexedDBLocalPersistence } from '@angular/fire/auth';
+
 import { ComponentsModule } from '../../components/components.module';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireModule } from '@angular/fire';
 import { environment } from '../../../environments/environment';
 import { FirebaseAuthService } from './firebase-auth.service';
+
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      // /firebase/auth redirect
+      // ? /firebase/auth redirect
       {
         path: '',
         redirectTo: 'sign-in',
@@ -40,8 +45,19 @@ const routes: Routes = [
     IonicModule,
     ComponentsModule,
     RouterModule.forChild(routes),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule
+    // ? Correct way to initialize Firebase using the Capacitor Firebase plugin mixed with the Firebase JS SDK (@angular/fire)
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => {
+      if (Capacitor.isNativePlatform()) {
+        return initializeAuth(getApp(), {
+          persistence: indexedDBLocalPersistence
+          // persistence: browserLocalPersistence
+          // popupRedirectResolver: browserPopupRedirectResolver
+        });
+      } else {
+        return getAuth();
+      }
+    })
   ],
   providers: [FirebaseAuthService]
 })

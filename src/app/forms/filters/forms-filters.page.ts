@@ -1,10 +1,10 @@
-import { Component, ViewEncapsulation} from '@angular/core';
+import { Component} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 import { counterRangeValidator } from '../../components/counter-input/counter-input.component';
 
 @Component({
-  selector: 'forms-filters-page',
+  selector: 'app-forms-filters-page',
   templateUrl: './forms-filters.page.html',
   styleUrls: [
     './styles/forms-filters.page.scss',

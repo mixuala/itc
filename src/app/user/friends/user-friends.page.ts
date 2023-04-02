@@ -28,12 +28,16 @@ export class UserFriendsPage implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.data.subscribe(routeData => {
-      this.data = routeData['data'];
-      this.friendsList = this.data.friends;
-      this.followersList = this.data.followers;
-      this.followingList = this.data.following;
-    }, (error) => console.log(error));
+    this.route.data
+    .subscribe({
+      next: (routeData) => {
+        this.data = routeData['data'];
+        this.friendsList = this.data.friends;
+        this.followersList = this.data.followers;
+        this.followingList = this.data.following;
+      },
+      error: (error) => console.log(error)
+    });
   }
 
   segmentChanged(ev): void {

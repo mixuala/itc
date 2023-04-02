@@ -216,8 +216,8 @@
 }
 
 
-// ISSUE: .swiper-paggination gets rendered dynamically. That prevents styling the elements when using the default Angular ViewEncapsulation.None
-//        (Angular doesn't add an '_ngcontent' attribute to the .swiper-paggination because it's dynamically rendered)
+// ISSUE: .swiper-pagination gets rendered dynamically. That prevents styling the elements when using the default Angular ViewEncapsulation.None
+//        (Angular doesn't add an '_ngcontent' attribute to the .swiper-pagination because it's dynamically rendered)
 // FIX:   See: https://stackoverflow.com/a/36265072/1116959
 :host ::ng-deep .details-slides {
   .swiper-pagination {

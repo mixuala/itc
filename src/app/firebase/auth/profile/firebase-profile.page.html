@@ -9,7 +9,7 @@
 <ion-content class="user-content">
   <ion-row>
     <ion-col class="ion-no-padding">
-      <app-image-shell class="user-image add-overlay" [display]="'cover'" animation="spinner" [src]="user?.image" [alt]="'item image'">
+      <app-image-shell class="user-image add-overlay" [display]="'cover'" animation="spinner" [src]="user?.image ?? './assets/sample-images/avatar.png'" [alt]="'item image'">
         <app-aspect-ratio [ratio]="{w:1, h:1}">
         </app-aspect-ratio>
       </app-image-shell>

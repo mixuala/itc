@@ -7,18 +7,7 @@ First install ImageMagick
 brew install imagemagick
 ```
 
-### Then run this command
-```
-convert icon.png -thumbnail 128x128 -alpha on -background none -flatten favicon-128.png
-convert favicon-128.png -define icon:auto-resize:128,64,48,32,24,16 favicon-128.ico
-
-convert icon.png -thumbnail 64x64 -alpha on -background none -flatten favicon-64.png
-convert favicon-64.png -define icon:auto-resize:64,48,32,24,16 favicon-64.ico
-```
-
-Between favicon-128.ico, and favicon-64.ico choose the onw that fit your image size budget for the favicon and renameit to favicon.ico
-
-# Generate the other icons
+# Generate icons
 ```
 convert icon.png -thumbnail 16x16 -alpha on -background none -flatten icon/favicon-16x16.png
 convert icon.png -thumbnail 24x24 -alpha on -background none -flatten icon/favicon-24x24.png
@@ -39,6 +28,17 @@ convert icon.png -thumbnail 384x384 -alpha on -background none -flatten icon/ico
 convert icon.png -thumbnail 512x512 -alpha on -background none -flatten icon/icon-512x512.png
 convert icon.png -thumbnail 1024x1024 -alpha on -background none -flatten icon/icon-1024x1024.png
 ```
+
+### Then run this command
+```
+convert icon/favicon-128x128.png -define icon:auto-resize:128,64,48,32,24,16 icon/favicon.ico
+
+convert icon/favicon-64x64.png -define icon:auto-resize:64,48,32,24,16 icon/favicon-64.ico
+```
+
+> Between favicon-128.ico, and favicon-64.ico choose the one that fit your image size budget for the favicon and rename it to favicon.ico
+
+> Finally, copy all the icons to the `src/assets/icon/` folder
 
 # Generate splash screens
 Useful tips on how to crop properly from (here)[https://askubuntu.com/a/762841/338320] and (here)[http://www.fmwconcepts.com/imagemagick/aspectcrop/index.php]

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { FirebaseAuthService } from '../firebase-auth.service';
 
 @Component({
@@ -21,19 +22,25 @@ export class FirebaseProfilePage implements OnInit {
   }
 
   ngOnInit() {
-
     this.route.data.subscribe(routeData => {
       this.user = routeData['data'];
     });
   }
 
-  signOut() {
-    this.authService.signOut().subscribe(() => {
-      // Sign-out successful.
-      // Replace state as we are no longer authorized to access profile page.
-      this.router.navigate(['firebase/auth/sign-in'], { replaceUrl: true });
-    }, (error) => {
-      console.log('signout error', error);
-    });
+  public async signOut(): Promise<void> {
+    try {
+      // * 1. Sign out on the native layer
+      await this.authService.signOut()
+      .then((result) => {
+        // ? Sign-out successful
+        // ? Replace state as we are no longer authorized to access profile page
+        this.router.navigate(['firebase/auth/sign-in'], { replaceUrl: true });
+      })
+      .catch((error) => {
+        console.log('userProfile - signOut() - error', error);
+      });
+    } finally {
+      console.log('userProfile - signOut() - finally');
+    }
   }
 }

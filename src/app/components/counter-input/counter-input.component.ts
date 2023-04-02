@@ -26,11 +26,11 @@ export function counterRangeValidator(minValue, maxValue) {
   encapsulation: ViewEncapsulation.None
 })
 export class CounterInputComponent implements ControlValueAccessor, OnChanges {
-  // tslint:disable-next-line:no-input-rename
+  // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input('counterValue') _counterValue = 0;
-  // tslint:disable-next-line:no-input-rename
+  // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input('max') counterRangeMax;
-  // tslint:disable-next-line:no-input-rename
+  // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input('min') counterRangeMin;
 
   propagateChange: any = () => {}; // Noop function

@@ -14,7 +14,7 @@ export class DealsDetailsPage implements OnInit {
   details: any;
   slidesOptions: any = {
     zoom: {
-      toggle: false // Disable zooming to prevent weird double tap zomming on slide images
+      toggle: false // Disable zooming to prevent weird double tap zooming on slide images
     }
   };
 

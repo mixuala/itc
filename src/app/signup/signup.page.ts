@@ -107,4 +107,9 @@ export class SignupPage {
     console.log('twitter signup');
     this.router.navigate(['app/categories']);
   }
+
+  doAppleSignup(): void {
+    console.log('apple signup');
+    this.router.navigate(['app/categories']);
+  }
 }

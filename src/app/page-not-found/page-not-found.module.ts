@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { ComponentsModule } from '../components/components.module';
-import { PageNotFound } from './page-not-found.page';
+import { PageNotFoundPage } from './page-not-found.page';
 
 @NgModule({
   imports: [
@@ -16,10 +16,10 @@ import { PageNotFound } from './page-not-found.page';
     RouterModule.forChild([
       {
          path: '',
-         component: PageNotFound
+         component: PageNotFoundPage
       }
     ])
   ],
-  declarations: [PageNotFound]
+  declarations: [PageNotFoundPage]
 })
 export class PageNotFoundModule {}

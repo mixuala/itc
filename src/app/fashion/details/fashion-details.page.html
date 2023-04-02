@@ -9,16 +9,16 @@
 
 <ion-content class="fashion-details-content">
   <ion-row class="slider-row">
-    <ion-slides class="details-slides" pager="true" [options]="slidesOptions">
-      <ion-slide class="" *ngFor="let image of details?.showcaseImages">
+    <swiper [pagination]="true" [config]="slidesOptions" class="details-slides">
+      <ng-template swiperSlide *ngFor="let image of details?.showcaseImages">
         <ion-row class="slide-inner-row">
           <app-image-shell [display]="'cover'" animation="spinner" class="showcase-image" [ngClass]="{'centered-image': (image.type === 'square'), 'fill-image': (image.type === 'fill')}" [src]="image.source">
             <app-aspect-ratio [ratio]="{w:64, h:50}">
             </app-aspect-ratio>
           </app-image-shell>
         </ion-row>
-      </ion-slide>
-    </ion-slides>
+      </ng-template>
+    </swiper>
   </ion-row>
   <div class="description-wrapper">
     <h3 class="details-name">

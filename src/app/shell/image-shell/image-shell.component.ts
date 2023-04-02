@@ -12,13 +12,13 @@ export class ImageShellComponent {
   // To debug shell styles, change configuration in the environment file
   private debugDisplay = (environment.appShellConfig && environment.appShellConfig.debug) ? environment.appShellConfig.debug : false;
 
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   _src = '';
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   _alt = '';
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   _loadingStrategy: 'lazy' | 'eager' = 'lazy';
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
   _display = '';
 
   @HostBinding('class.img-loaded') imageLoaded = false;

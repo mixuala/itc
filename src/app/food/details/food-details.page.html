@@ -112,7 +112,7 @@
         <app-aspect-ratio [ratio]="{w: 1, h: 1}">
           <app-image-shell class="user-picture-image" [src]="picture" [alt]="'user image'"></app-image-shell>
         </app-aspect-ratio>
-        <a class="has-more-pictures" *ngIf="i == 4 && details?.usersPictures?.length > 5">
+        <a class="has-more-pictures" *ngIf="i === 4 && details?.usersPictures?.length > 5">
           <span class="pictures-count">{{ details?.usersPictures?.length - 5 }}</span>
         </a>
       </ion-col>

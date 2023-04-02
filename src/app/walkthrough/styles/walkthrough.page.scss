@@ -54,7 +54,7 @@ ion-content {
 }
 
 .illustration-and-decoration-slide {
-  .slide-inner-row {
+  &.slide-inner-row {
     --ion-grid-column-padding: 0px;
 
     flex-flow: column;
@@ -141,9 +141,9 @@ ion-content {
 .last-slide {
   --page-vector-decoration-fill: var(--page-last-slide-background);
 
-  .slide-inner-row {
+  &.slide-inner-row {
     // In the last slide .swiper-pagination is hidden
-    border-width: 0px;
+    border-width: 0px !important;
   }
 
   .info-col {
@@ -207,8 +207,8 @@ ion-content {
   }
 }
 
-// ISSUE: .swiper-paggination gets rendered dynamically. That prevents styling the elements when using the default Angular ViewEncapsulation.None
-//        (Angular doesn't add an '_ngcontent' attribute to the .swiper-paggination because it's dynamically rendered)
+// ISSUE: .swiper-pagination gets rendered dynamically. That prevents styling the elements when using the default Angular ViewEncapsulation.None
+//        (Angular doesn't add an '_ngcontent' attribute to the .swiper-pagination because it's dynamically rendered)
 // FIX:   See: https://stackoverflow.com/a/36265072/1116959
 :host ::ng-deep .walkthrough-slides {
   .swiper-pagination {

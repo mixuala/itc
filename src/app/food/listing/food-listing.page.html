@@ -58,7 +58,7 @@
           <app-aspect-ratio [ratio]="{w: 1, h: 1}">
             <app-image-shell class="picture-image" [src]="picture" [alt]="'food image'"></app-image-shell>
           </app-aspect-ratio>
-          <a class="has-more-pictures" [routerLink]="['/app/categories/food/', item.slug]" *ngIf="i == 4 && item.pictures.length > 5">
+          <a class="has-more-pictures" [routerLink]="['/app/categories/food/', item.slug]" *ngIf="i === 4 && item.pictures.length > 5">
             <span class="pictures-count">{{ item.pictures.length - 5 }}</span>
           </a>
         </ion-col>

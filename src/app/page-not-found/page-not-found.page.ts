@@ -8,7 +8,7 @@ import { MenuController } from '@ionic/angular';
     './styles/page-not-found.page.scss'
   ]
 })
-export class PageNotFound {
+export class PageNotFoundPage {
 
   constructor(public menu: MenuController) { }
 

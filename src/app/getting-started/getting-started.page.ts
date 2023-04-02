@@ -1,7 +1,12 @@
-import { Component, AfterViewInit, ViewChild, HostBinding } from '@angular/core';
+import { Component, HostBinding, NgZone } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
-import { IonSlides, MenuController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
+import { IonicSwiper } from "@ionic/angular";
+
+import SwiperCore, { Pagination } from "swiper";
+
+SwiperCore.use([Pagination, IonicSwiper]);
 
 @Component({
   selector: 'app-getting-started',
@@ -12,13 +17,16 @@ import { IonSlides, MenuController } from '@ionic/angular';
     './styles/getting-started.responsive.scss'
   ]
 })
-export class GettingStartedPage implements AfterViewInit {
-  @ViewChild(IonSlides, { static: true }) slides: IonSlides;
+export class GettingStartedPage {
   @HostBinding('class.last-slide-active') isLastSlide = false;
 
+  swiperRef: SwiperCore;
   gettingStartedForm: FormGroup;
 
-  constructor(public menu: MenuController) {
+  constructor(
+    public menu: MenuController,
+    private ngZone: NgZone
+  ) {
     this.gettingStartedForm = new FormGroup({
       browsingCategory: new FormControl('men'),
       followingInterests: new FormGroup({
@@ -33,26 +41,24 @@ export class GettingStartedPage implements AfterViewInit {
   }
 
   // Disable side menu for this page
-  ionViewDidEnter(): void {
+  public ionViewDidEnter(): void {
     this.menu.enable(false);
   }
 
   // Restore to default when leaving this page
-  ionViewDidLeave(): void {
+  public ionViewDidLeave(): void {
     this.menu.enable(true);
   }
 
-  ngAfterViewInit(): void {
-    // ViewChild is set
-    this.slides.isEnd().then(isEnd => {
-      this.isLastSlide = isEnd;
-    });
+  public swiperInit(swiper: SwiperCore): void {
+    this.swiperRef = swiper;
+  }
 
-    // Subscribe to changes
-    this.slides.ionSlideWillChange.subscribe(changes => {
-      this.slides.isEnd().then(isEnd => {
-        this.isLastSlide = isEnd;
-      });
+  public slideWillChange(): void {
+    // ? We need to use ngZone because the change happens outside Angular
+    // (see: https://swiperjs.com/angular#swiper-component-events)
+    this.ngZone.run(() => {
+      this.isLastSlide = this.swiperRef.isEnd;
     });
   }
 }

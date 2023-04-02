@@ -15,23 +15,15 @@ export class RatingInputComponent implements ControlValueAccessor, OnInit {
   @Input() readOnly = false;
 
   range: Array<number>;
-  innerValue: any;
-  propagateChange: any = () => {}; // Noop function
+  innerValue: any; // the value of the control
+  propagateChange: any = () => {};
 
   ngOnInit() {
-    const states: Array<number> = [];
+    this.range = []; // the amout of stars
 
     for (let i = 0; i < this.max; i++) {
-      if (this.innerValue > i && this.innerValue < i + 1) {
-        states[i] = 2;
-      } else if (this.innerValue > i) {
-        states[i] = 1;
-      } else {
-        states[i] = 0;
-      }
+      this.range[i] = 1;
     }
-
-    this.range = states;
   }
 
   get value(): any {

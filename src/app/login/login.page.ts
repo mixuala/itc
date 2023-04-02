@@ -73,4 +73,9 @@ export class LoginPage {
     console.log('twitter login');
     this.router.navigate(['app/categories']);
   }
+
+  doAppleLogin(): void {
+    console.log('apple login');
+    this.router.navigate(['app/categories']);
+  }
 }

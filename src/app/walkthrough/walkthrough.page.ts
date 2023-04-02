@@ -1,8 +1,14 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Component, AfterViewInit, ViewChild, HostBinding, PLATFORM_ID, Inject, OnInit } from '@angular/core';
-import { IonSlides, MenuController } from '@ionic/angular';
-import { Plugins } from '@capacitor/core';
-const { Storage } = Plugins;
+import { Component, AfterViewInit, ViewChild, HostBinding, OnInit, NgZone } from '@angular/core';
+
+import { Storage } from '@capacitor/storage';
+
+import { MenuController } from '@ionic/angular';
+import { IonicSwiper } from '@ionic/angular';
+
+import SwiperCore, { Pagination } from 'swiper';
+import { SwiperComponent } from 'swiper/angular';
+
+SwiperCore.use([Pagination, IonicSwiper]);
 
 @Component({
   selector: 'app-walkthrough',
@@ -14,21 +20,17 @@ const { Storage } = Plugins;
   ]
 })
 export class WalkthroughPage implements AfterViewInit, OnInit {
-  slidesOptions: any = {
-    zoom: {
-      toggle: false // Disable zooming to prevent weird double tap zomming on slide images
-    }
-  };
+  swiperRef: SwiperCore;
 
-  @ViewChild(IonSlides, { static: true }) slides: IonSlides;
+  @ViewChild(SwiperComponent, { static: false }) swiper?: SwiperComponent;
 
   @HostBinding('class.first-slide-active') isFirstSlide = true;
 
   @HostBinding('class.last-slide-active') isLastSlide = false;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: object,
-    public menu: MenuController
+    public menu: MenuController,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit(): void {
@@ -51,31 +53,46 @@ export class WalkthroughPage implements AfterViewInit, OnInit {
 
   ngAfterViewInit(): void {
     // Accessing slides in server platform throw errors
-    if (isPlatformBrowser(this.platformId)) {
-      // ViewChild is set
-      this.slides.isBeginning().then(isBeginning => {
-        this.isFirstSlide = isBeginning;
-      });
-      this.slides.isEnd().then(isEnd => {
-        this.isLastSlide = isEnd;
-      });
+    // if (isPlatformBrowser(this.platformId)) {
+    this.swiperRef = this.swiper.swiperRef;
 
-      // Subscribe to changes
-      this.slides.ionSlideWillChange.subscribe(changes => {
-        this.slides.isBeginning().then(isBeginning => {
-          this.isFirstSlide = isBeginning;
-        });
-        this.slides.isEnd().then(isEnd => {
-          this.isLastSlide = isEnd;
-        });
+    this.swiperRef.on('slidesLengthChange', () => {
+      // ? We need to use ngZone because the change happens outside Angular
+      // (see: https://swiperjs.com/angular#swiper-component-events)
+      this.ngZone.run(() => {
+        this.markSlides(this.swiperRef);
       });
-    }
+    });
+
+    this.swiperRef.on('slideChange', () => {
+      // ? We need to use ngZone because the change happens outside Angular
+      // (see: https://swiperjs.com/angular#swiper-component-events)
+      this.ngZone.run(() => {
+        this.markSlides(this.swiperRef);
+      });
+    });
+    // }
   }
 
-  skipWalkthrough(): void {
+  public setSwiperInstance(swiper: SwiperCore): void {
+    // console.log('setSwiperInstance');
+  }
+
+  public swiperInit(): void {
+    // console.log('swiperInit');
+  }
+
+  public slideWillChange(): void {
+    // console.log('slideWillChange');
+  }
+
+  public markSlides(swiper: SwiperCore): void {
+    this.isFirstSlide = (swiper.isBeginning || swiper.activeIndex === 0);
+    this.isLastSlide = swiper.isEnd;
+  }
+
+  public skipWalkthrough(): void {
     // Skip to the last slide
-    this.slides.length().then(length => {
-      this.slides.slideTo(length);
-    });
+    this.swiperRef.slideTo(this.swiperRef.slides.length - 1);
   }
 }

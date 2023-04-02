@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+
 import { environment } from '../../../environments/environment';
 
 const firebaseRoutes: Routes = [
@@ -30,8 +31,8 @@ const firebaseRoutes: Routes = [
     IonicModule,
     CommonModule,
     RouterModule.forChild(firebaseRoutes),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
-  ],
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore())
+  ]
 })
 export class FirebaseCrudModule {}

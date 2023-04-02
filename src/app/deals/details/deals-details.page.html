@@ -15,15 +15,15 @@
 
   <div class="details-wrapper">
     <ion-row class="slider-row">
-      <ion-slides class="details-slides" pager="true" [options]="slidesOptions">
-        <ion-slide class="" *ngFor="let image of details?.showcaseImages">
+      <swiper [pagination]="true" [config]="slidesOptions" class="details-slides">
+        <ng-template swiperSlide *ngFor="let image of details?.showcaseImages">
           <ion-row class="slide-inner-row">
             <app-aspect-ratio [ratio]="{w: 56, h: 40}">
               <app-image-shell [src]="image" [alt]="'deals details'" class="showcase-image" animation="spinner"></app-image-shell>
             </app-aspect-ratio>
           </ion-row>
-        </ion-slide>
-      </ion-slides>
+        </ng-template>
+      </swiper>
     </ion-row>
     <ion-row class="description-row">
       <ion-col class="logo-col" size="6">

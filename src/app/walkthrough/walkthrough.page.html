@@ -7,9 +7,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides class="walkthrough-slides" pager="true" [options]="slidesOptions">
-    <ion-slide class="first-slide illustration-and-decoration-slide">
-      <ion-row class="slide-inner-row">
+  <swiper [pagination]="true" class="walkthrough-slides" (swiper)="setSwiperInstance($event)" (init)="swiperInit()" (slideChangeTransitionStart)="slideWillChange()">
+    <ng-template swiperSlide>
+      <ion-row class="slide-inner-row first-slide illustration-and-decoration-slide">
         <ion-col class="illustration-col">
           <app-aspect-ratio [ratio]="{w:915, h:849}">
             <app-image-shell class="illustration-image" animation="spinner" [src]="'./assets/sample-images/walkthrough/walkthrough-illustration-1.svg'" [alt]="'walkthrough'"></app-image-shell>
@@ -23,19 +23,19 @@
         </ion-col>
         <ion-col class="info-col">
           <div class="info-wrapper">
-            <h3 class="info-title">This App is built with Ionic 5</h3>
+            <h3 class="info-title">This App is built with Ionic 6</h3>
             <p class="info-paragraph">
               It was created by the <b>IonicThemes</b> team to help you jump start your Ionic app development.
             </p>
             <p class="info-paragraph">
-              <b>You will love Ionic 5, and if you get lost, remember we have lots of tutorials to help you.</b>
+              <b>You will love Ionic 6, and if you get lost, remember we have lots of tutorials to help you.</b>
             </p>
           </div>
         </ion-col>
       </ion-row>
-    </ion-slide>
-    <ion-slide class="second-slide illustration-and-decoration-slide">
-      <ion-row class="slide-inner-row">
+    </ng-template>
+    <ng-template swiperSlide>
+      <ion-row class="second-slide illustration-and-decoration-slide slide-inner-row">
         <ion-col class="illustration-col">
           <app-aspect-ratio [ratio]="{w:1096, h:806}">
             <app-image-shell class="illustration-image" animation="spinner" [src]="'./assets/sample-images/walkthrough/walkthrough-illustration-2.svg'" [alt]="'walkthrough'"></app-image-shell>
@@ -59,9 +59,9 @@
           </div>
         </ion-col>
       </ion-row>
-    </ion-slide>
-    <ion-slide class="third-slide illustration-and-decoration-slide">
-      <ion-row class="slide-inner-row">
+    </ng-template>
+    <ng-template swiperSlide>
+      <ion-row class="third-slide illustration-and-decoration-slide slide-inner-row">
         <ion-col class="illustration-col">
           <app-aspect-ratio [ratio]="{w:918, h:703}">
             <app-image-shell class="illustration-image" animation="spinner" [src]="'./assets/sample-images/walkthrough/walkthrough-illustration-3.svg'" [alt]="'walkthrough'"></app-image-shell>
@@ -75,16 +75,16 @@
         </ion-col>
         <ion-col class="info-col">
           <div class="info-wrapper">
-            <h3 class="info-title">Which components are available in this Ionic 5 app?</h3>
+            <h3 class="info-title">Which components are available in this Ionic 6 app?</h3>
             <p class="info-paragraph">
               Tabs, Notifications, Profile, SideMenu, Authentication, Getting Started, Walkthrough, Forms and Validations, Categories, <b>Travel</b>, <b>Fashion</b>, <b>Food</b>, <b>Deals</b> and <b>Real Estate</b> listings and details page and many more!
             </p>
           </div>
         </ion-col>
       </ion-row>
-    </ion-slide>
-    <ion-slide class="last-slide illustration-and-decoration-slide">
-      <ion-row class="slide-inner-row">
+    </ng-template>
+    <ng-template swiperSlide>
+      <ion-row class="last-slide illustration-and-decoration-slide slide-inner-row">
         <ion-col class="illustration-col">
           <app-aspect-ratio [ratio]="{w:924, h:819}">
             <app-image-shell class="illustration-image" animation="spinner" [src]="'./assets/sample-images/walkthrough/walkthrough-illustration-4.svg'" [alt]="'walkthrough'"></app-image-shell>
@@ -102,7 +102,7 @@
               <div class="info-wrapper">
                 <h3 class="info-title">It's time to start</h3>
                 <p class="info-paragraph">
-                  Hope you like this Ionic 5 template and please let us know your feedback so we can keep improving it! Enjoy ;)
+                  Hope you like this Ionic 6 template and please let us know your feedback so we can keep improving it! Enjoy ;)
                 </p>
               </div>
             </ion-col>
@@ -118,6 +118,6 @@
           </ion-row>
         </ion-col>
       </ion-row>
-    </ion-slide>
-  </ion-slides>
+    </ng-template>
+  </swiper>
 </ion-content>

@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
+import { SwiperModule } from 'swiper/angular';
+
 import { ComponentsModule } from '../../components/components.module';
 
 import { FashionService } from '../fashion.service';
@@ -27,7 +29,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ComponentsModule
+    ComponentsModule,
+    SwiperModule
   ],
   declarations: [
     FashionDetailsPage

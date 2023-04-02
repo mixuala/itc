@@ -23,7 +23,7 @@ export class FirebaseListingPage implements OnInit {
 
   searchSubject: ReplaySubject<any> = new ReplaySubject<any>(1);
   searchFiltersObservable: Observable<any> = this.searchSubject.asObservable();
-  items: [];
+  items: Array<any>;
 
 
   constructor(

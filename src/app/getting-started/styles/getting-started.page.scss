@@ -78,7 +78,7 @@ ion-content {
 }
 
 .browsing-categories-slide {
-  .slide-inner-row {
+  &.slide-inner-row {
     flex-flow: column;
     justify-content: space-between;
   }
@@ -129,12 +129,12 @@ ion-content {
 }
 
 .interests-to-follow-slide {
-  .slide-inner-row {
+  &.slide-inner-row {
     flex-flow: column;
     justify-content: space-between;
 
     // In the last slide .swiper-pagination is hidden
-    border-width: 0px;
+    border-width: 0px !important;
   }
 
   .heading-col {
@@ -214,7 +214,7 @@ ion-content {
 
       height: 100%;
       width: 100%;
-      // Note: We cannote change the styles of the .checkbox-icon because it's inside the shadow dom.
+      // Note: We cannot change the styles of the .checkbox-icon because it's inside the shadow dom.
       // An alternative would be to set --width and --height to 0px and add a custom overlay and icon in the <custom-checkbox> html
     }
 
@@ -234,8 +234,8 @@ ion-content {
   }
 }
 
-// ISSUE: .swiper-paggination gets rendered dynamically. That prevents styling the elements when using the default Angular ViewEncapsulation.None
-//        (Angular doesn't add an '_ngcontent' attribute to the .swiper-paggination because it's dynamically rendered)
+// ISSUE: .swiper-pagination gets rendered dynamically. That prevents styling the elements when using the default Angular ViewEncapsulation.None
+//        (Angular doesn't add an '_ngcontent' attribute to the .swiper-pagination because it's dynamically rendered)
 // FIX:   See: https://stackoverflow.com/a/36265072/1116959
 :host ::ng-deep .getting-started-slides {
   .swiper-pagination {

@@ -1,11 +1,14 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MenuController, LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
+
+import { AuthStateChange, SignInResult } from '@capacitor-firebase/authentication';
+
+import { Subscription } from 'rxjs';
+
 import { PasswordValidator } from '../../../validators/password.validator';
 import { FirebaseAuthService } from '../firebase-auth.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-firebase-sign-up',
@@ -14,11 +17,10 @@ import { Subscription } from 'rxjs';
     './styles/firebase-sign-up.page.scss'
   ]
 })
-export class FirebaseSignUpPage implements OnInit, OnDestroy {
+export class FirebaseSignUpPage implements OnInit {
   signupForm: FormGroup;
   matching_passwords_group: FormGroup;
   submitError: string;
-  redirectLoader: HTMLIonLoadingElement;
   authRedirectResult: Subscription;
 
   validation_messages = {
@@ -39,13 +41,10 @@ export class FirebaseSignUpPage implements OnInit, OnDestroy {
   };
 
   constructor(
-    public router: Router,
-    public route: ActivatedRoute,
     public menu: MenuController,
-    public authService: FirebaseAuthService,
-    private ngZone: NgZone,
-    public loadingController: LoadingController,
-    public location: Location
+    public router: Router,
+    public firebaseAuthService: FirebaseAuthService,
+    private ngZone: NgZone
   ) {
     this.matching_passwords_group = new FormGroup({
       'password': new FormControl('', Validators.compose([
@@ -65,9 +64,9 @@ export class FirebaseSignUpPage implements OnInit, OnDestroy {
       'matching_passwords': this.matching_passwords_group
     });
 
-    // Get firebase authentication redirect result invoken when using signInWithRedirect()
-    // signInWithRedirect() is only used when client is in web but not desktop
-    this.authRedirectResult = this.authService.getRedirectResult()
+    // ? Get firebase authentication redirect result invoked when using signInWithRedirect()
+    // ? signInWithRedirect() is only used when client is in web but not desktop. For example a PWA
+    this.authRedirectResult = this.firebaseAuthService.redirectResult$
     .subscribe(result => {
       if (result.error) {
         this.manageAuthWithProvidersErrors(result.error);
@@ -76,11 +75,12 @@ export class FirebaseSignUpPage implements OnInit, OnDestroy {
       }
     });
 
-    // Check if url contains our custom 'auth-redirect' param, then show a loader while we receive the getRedirectResult notification
-    this.route.queryParams.subscribe(params => {
-      const authProvider = params['auth-redirect'];
-      if (authProvider) {
-        this.presentLoading(authProvider);
+    this.firebaseAuthService.authState$
+    .subscribe((stateChange: AuthStateChange) => {
+      if (!stateChange.user) {
+        this.manageAuthWithProvidersErrors('No user logged in');
+      } else {
+        this.redirectLoggedUserToProfilePage();
       }
     });
   }
@@ -89,11 +89,94 @@ export class FirebaseSignUpPage implements OnInit, OnDestroy {
     this.menu.enable(false);
   }
 
-  // Once the auth provider finished the authentication flow, and the auth redirect completes,
-  // hide the loader and redirect the user to the profile page
-  redirectLoggedUserToProfilePage() {
-    this.dismissLoading();
+  public async doFacebookSignup(): Promise<void> {
+    this.resetSubmitError();
 
+    try {
+      await this.firebaseAuthService.signInWithFacebook()
+      .then((result: SignInResult) => {
+        // ? This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        // const token = result.credential.accessToken;
+        this.redirectLoggedUserToProfilePage();
+      })
+      .catch((error) => {
+        this.manageAuthWithProvidersErrors(error.message);
+      });
+    } finally {
+      // ? Termination code goes here
+    }
+  }
+
+  public async doGoogleSignup(): Promise<void> {
+    this.resetSubmitError();
+
+    try {
+      await this.firebaseAuthService.signInWithGoogle()
+      .then((result) => {
+        // ? This gives you a Google Access Token. You can use it to access the Google API.
+        // const token = result.credential.accessToken;
+        this.redirectLoggedUserToProfilePage();
+      })
+      .catch((error) => {
+        this.manageAuthWithProvidersErrors(error.message);
+      });
+    } finally {
+      // ? Termination code goes here
+    }
+  }
+
+  public async doTwitterSignup(): Promise<void> {
+    this.resetSubmitError();
+
+    try {
+      await this.firebaseAuthService.signInWithTwitter()
+      .then((result) => {
+        // ? This gives you a Twitter Access Token. You can use it to access the Twitter API.
+        // const token = result.credential.accessToken;
+        this.redirectLoggedUserToProfilePage();
+      })
+      .catch((error) => {
+        this.manageAuthWithProvidersErrors(error.message);
+      });
+    } finally {
+      // ? Termination code goes here
+    }
+  }
+
+  public async doAppleSignup(): Promise<void> {
+    this.resetSubmitError();
+
+    try {
+      await this.firebaseAuthService.signInWithApple()
+      .then((result) => {
+        this.redirectLoggedUserToProfilePage();
+      })
+      .catch((error) => {
+        this.manageAuthWithProvidersErrors(error.message);
+      });
+    } finally {
+      // ? Termination code goes here
+    }
+  }
+
+  public async signUpWithEmail(): Promise<void> {
+    this.resetSubmitError();
+
+    try {
+      await this.firebaseAuthService.signUpWithEmail(this.signupForm.value['email'], this.signupForm.value.matching_passwords.password)
+      .then((result) => {
+        this.redirectLoggedUserToProfilePage();
+      })
+      .catch((error) => {
+        this.submitError = error.message;
+      });
+    } finally {
+      // ? Termination code goes here
+    }
+  }
+
+  // ? Once the auth provider finished the authentication flow, and the auth redirect completes, hide the loader and redirect the user to the profile page
+  private redirectLoggedUserToProfilePage(): void {
     // As we are calling the Angular router navigation inside a subscribe method, the navigation will be triggered outside Angular zone.
     // That's why we need to wrap the router navigation call inside an ngZone wrapper
     this.ngZone.run(() => {
@@ -108,99 +191,11 @@ export class FirebaseSignUpPage implements OnInit, OnDestroy {
     });
   }
 
-  async presentLoading(authProvider?: string) {
-    const authProviderCapitalized = authProvider[0].toUpperCase() + authProvider.slice(1);
-    this.redirectLoader = await this.loadingController.create({
-      message: authProvider ? 'Signing up with ' + authProviderCapitalized : 'Signin up ...',
-      duration: 4000
-    });
-    await this.redirectLoader.present();
-  }
-
-  async dismissLoading() {
-    if (this.redirectLoader) {
-      await this.redirectLoader.dismiss();
-    }
-  }
-
-  resetSubmitError() {
-    this.submitError = null;
-  }
-
-  // Before invoking auth provider redirect flow, present a loading indicator and add a flag to the path.
-  // The precense of the flag in the path indicates we should wait for the auth redirect to complete.
-  prepareForAuthWithProvidersRedirection(authProvider: string) {
-    this.presentLoading(authProvider);
-
-    this.location.go(this.location.path(), 'auth-redirect=' + authProvider, this.location.getState());
-  }
-
-  manageAuthWithProvidersErrors(errorMessage: string) {
+  private manageAuthWithProvidersErrors(errorMessage: string): void {
     this.submitError = errorMessage;
-    // remove auth-redirect param from url
-    this.location.replaceState(this.router.url.split('?')[0], '');
-    this.dismissLoading();
   }
 
-  signUpWithEmail(): void {
-    this.resetSubmitError();
-    const values = this.signupForm.value;
-    this.authService.signUpWithEmail(values.email, values.matching_passwords.password)
-      .then(user => {
-        // navigate to user profile
-        this.redirectLoggedUserToProfilePage();
-      })
-      .catch(error => {
-        this.submitError = error.message;
-        this.dismissLoading();
-      });
-  }
-
-  doFacebookSignup(): void {
-    this.resetSubmitError();
-    this.prepareForAuthWithProvidersRedirection('facebook');
-
-    this.authService.signInWithFacebook()
-    .subscribe((result) => {
-      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-      // const token = result.credential.accessToken;
-      this.redirectLoggedUserToProfilePage();
-    }, (error) => {
-      this.manageAuthWithProvidersErrors(error.message);
-    });
-  }
-
-  doGoogleSignup(): void {
-    this.resetSubmitError();
-    this.prepareForAuthWithProvidersRedirection('google');
-
-    this.authService.signInWithGoogle()
-    .subscribe((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      // var token = result.credential.accessToken;
-      this.redirectLoggedUserToProfilePage();
-    }, (error) => {
-        console.log(error);
-      this.manageAuthWithProvidersErrors(error.message);
-    });
-  }
-
-  doTwitterSignup(): void {
-    this.resetSubmitError();
-    this.prepareForAuthWithProvidersRedirection('twitter');
-
-    this.authService.signInWithTwitter()
-    .subscribe((result) => {
-      // This gives you a Twitter Access Token. You can use it to access the Twitter API.
-      // var token = result.credential.accessToken;
-      this.redirectLoggedUserToProfilePage();
-    }, (error) => {
-      console.log(error);
-      this.manageAuthWithProvidersErrors(error.message);
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.dismissLoading();
+  private resetSubmitError(): void {
+    this.submitError = null;
   }
 }

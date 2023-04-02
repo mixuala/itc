@@ -9,9 +9,9 @@
 <ion-content>
   <!-- We need the form wrapping the slides so all the inputs in the different slides are part of the same form -->
   <form class="getting-started-form" [formGroup]="gettingStartedForm">
-    <ion-slides class="getting-started-slides" pager="true">
-      <ion-slide class="browsing-categories-slide question-slide">
-        <ion-row class="slide-inner-row">
+    <swiper class="getting-started-slides" [pagination]="true" (swiper)="swiperInit($event)" (slideChangeTransitionStart)="slideWillChange()">
+      <ng-template swiperSlide>
+        <ion-row class="browsing-categories-slide question-slide slide-inner-row">
           <ion-col class="question-options-col" size="12">
             <h2 class="slide-title">What are you browsing for?</h2>
             <ion-list class="question-options-list">
@@ -44,9 +44,9 @@
             </ion-list>
           </ion-col>
         </ion-row>
-      </ion-slide>
-      <ion-slide class="interests-to-follow-slide question-slide">
-        <ion-row class="slide-inner-row">
+      </ng-template>
+      <ng-template swiperSlide>
+        <ion-row class="slide-inner-row interests-to-follow-slide question-slide">
           <ion-col class="heading-col">
             <h2 class="slide-title">Pick categories to follow</h2>
             <p class="slide-subtitle">
@@ -121,7 +121,7 @@
             <ion-button class="signup-button" color="secondary" expand="block" [routerLink]="['/auth/signup']">Sign Up</ion-button>
           </ion-col>
         </ion-row>
-      </ion-slide>
-    </ion-slides>
+      </ng-template>
+    </swiper>
   </form>
 </ion-content>

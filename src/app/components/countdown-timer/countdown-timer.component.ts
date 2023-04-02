@@ -93,13 +93,14 @@ export class CountdownTimerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // I believe if we run this on SSR, it won't ever trigger the change detection and thus the server will be stuck loading
     if (isPlatformBrowser(this.platformId)) {
-      this._updateInterval.pipe(takeUntil(this._unsubscribeSubject)).subscribe(
-        (val) => {
+      this._updateInterval.pipe(takeUntil(this._unsubscribeSubject))
+      .subscribe({
+        next: (val) => {
           this.updateValues();
         },
-        (error) => console.error(error),
-        () => console.log('[takeUntil] complete')
-      );
+        error: (error) => console.error(error),
+        complete: () => console.log('[takeUntil] complete')
+      });
     } else {
       this.updateValues();
     }

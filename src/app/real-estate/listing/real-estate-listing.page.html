@@ -81,7 +81,7 @@
                 {{amenity.name}}
               </span>
             </ion-col>
-            <ion-col class="has-more-amenities" *ngIf="i == 3 && item.amenities.length > 4">
+            <ion-col class="has-more-amenities" *ngIf="i === 3 && item.amenities.length > 4">
               <span class="amenities-count">+{{ item.amenities.length - 4 }}</span>
             </ion-col>
           </ng-container>

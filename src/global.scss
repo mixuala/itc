@@ -12,6 +12,11 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import "~swiper/scss";
+@import "~swiper/scss/autoplay";
+@import "~swiper/scss/pagination";
+@import "~@ionic/angular/css/ionic-swiper";
+
 // EXTRA GLOBAL STYLES
 // Add custom Ionic Colors
 @import "theme/custom-ion-colors.scss";

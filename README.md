@@ -1,4 +1,4 @@
-# Ionic 5 Full App
+# Ionic 6 Full App BASIC Version
 The most advanced and complete Mobile & PWA starter app template.
 
 # Documentation

@@ -9,7 +9,7 @@ import { counterRangeValidator } from '../../components/counter-input/counter-in
 import { CountryPhone } from './country-phone.model';
 
 @Component({
-  selector: 'forms-validations-page',
+  selector: 'app-forms-validations-page',
   templateUrl: './forms-validations.page.html',
   styleUrls: [
     './styles/forms-validations.page.scss'
